@@ -12,12 +12,25 @@ import java.util.List;
 /**
  * Created by mprice on 2/7/16.
  */
+
 public class ArticleResponse {
-        @SerializedName("data")
+
+    @SerializedName("response")
+    public Response response;
+
+    public static class Response {
+
+        public Response() {
+            articles = new ArrayList<>();
+        }
+
+        @SerializedName("docs")
         public List<ArticleModel> articles;
+    }
+
 
         public ArticleResponse() {
-            articles = new ArrayList<>();
+            response = new Response();
         }
 
         public static ArticleResponse parseJSON(String response) {

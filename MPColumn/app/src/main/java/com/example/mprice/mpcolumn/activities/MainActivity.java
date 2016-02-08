@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onArticleSearch(View view) {
 
-        String query = btnSearch.getText().toString();
+        String query = etQuery.getText().toString();
 
         mArticleProvider.fetchArticle(query, new ArticleProvider.HttpCallback() {
             @Override
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     String stringResponse = response.body().string();
                     ArticleResponse articleResponse = ArticleResponse.parseJSON(stringResponse);
 
-                    List<ArticleModel> articles = articleResponse.articles;
+                    List<ArticleModel> articles = articleResponse.response.articles;
 
                 } catch (IOException e) {
                     e.printStackTrace();
