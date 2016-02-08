@@ -11,12 +11,13 @@ import android.widget.EditText;
 import android.widget.GridView;
 
 import com.example.mprice.mpcolumn.R;
+import com.example.mprice.mpcolumn.adapters.ArticleArrayAdapter;
 import com.example.mprice.mpcolumn.models.ArticleModel;
 import com.example.mprice.mpcolumn.providers.ArticleProvider;
 import com.example.mprice.mpcolumn.providers.ArticleResponse;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     GridView gvResults;
 
     private ArticleProvider mArticleProvider;
-
+    private ArrayList<ArticleModel> articles;
+    private ArticleArrayAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        articles = new ArrayList<>();
         mArticleProvider = new ArticleProvider();
+        mAdapter = new ArticleArrayAdapter(this, articles);
+
+        gvResults.setAdapter(mAdapter);
     }
 
     @Override
@@ -83,9 +89,17 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Response response) {
                 try {
                     String stringResponse = response.body().string();
-                    ArticleResponse articleResponse = ArticleResponse.parseJSON(stringResponse);
+                   final ArticleResponse articleResponse = ArticleResponse.parseJSON(stringResponse);
 
-                    List<ArticleModel> articles = articleResponse.response.articles;
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            articles.clear();
+                            articles.addAll(articleResponse.response.articles);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    });
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
