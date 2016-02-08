@@ -1,11 +1,15 @@
 package com.example.mprice.mpcolumn.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -14,7 +18,7 @@ import com.example.mprice.mpcolumn.R;
 import com.example.mprice.mpcolumn.adapters.ArticleArrayAdapter;
 import com.example.mprice.mpcolumn.models.ArticleModel;
 import com.example.mprice.mpcolumn.providers.ArticleProvider;
-import com.example.mprice.mpcolumn.providers.ArticleResponse;
+import com.example.mprice.mpcolumn.serializer.ArticleDeserializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     @Bind(R.id.btnSearch)
     Button btnSearch;
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -51,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new ArticleArrayAdapter(this, articles);
 
         gvResults.setAdapter(mAdapter);
+
+        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
+                ArticleModel articleModel = articles.get(position);
+
+                i.putExtra("url", articleModel.webUrl);
+
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -76,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onArticleSearch(View view) {
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
 
         String query = etQuery.getText().toString();
 
@@ -89,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Response response) {
                 try {
                     String stringResponse = response.body().string();
-                   final ArticleResponse articleResponse = ArticleResponse.parseJSON(stringResponse);
+                   final ArticleDeserializer articleDeserializer = ArticleDeserializer.parseJSON(stringResponse);
 
-                    MainActivity.this.runOnUiThread(new Runnable() {
+                    SearchActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             articles.clear();
-                            articles.addAll(articleResponse.response.articles);
+                            articles.addAll(articleDeserializer.response.articles);
                             mAdapter.notifyDataSetChanged();
                         }
                     });

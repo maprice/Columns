@@ -51,12 +51,13 @@ public class ArticleArrayAdapter extends ArrayAdapter<ArticleModel> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        
-        viewHolder.tvHeadline.setText(articleModel.headline.main);
 
+        viewHolder.tvHeadline.setText(articleModel.headline.main);
+        viewHolder.ivThumbnail.setImageResource(0);
+        
         if (articleModel.thumbnails.size() > 0) {
-            String imageUrl = articleModel.thumbnails.get(0).url;
-            viewHolder.ivThumbnail.setImageResource(0);
+            String imageUrl = articleModel.thumbnails.get(1).url;
+
             Glide.with(getContext())
                     .load("http://www.nytimes.com/" + imageUrl)
                     .into(viewHolder.ivThumbnail);

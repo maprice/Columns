@@ -1,29 +1,40 @@
 package com.example.mprice.mpcolumn.serializer;
 
 import com.example.mprice.mpcolumn.models.ArticleModel;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-
-import okhttp3.Response;
+import java.util.List;
 
 /**
  * Created by mprice on 2/7/16.
  */
+
 public class ArticleDeserializer {
-    public static ArticleModel deserializeToArticleModel(Response response) {
 
-      Gson gson = new Gson();
+    @SerializedName("response")
+    public Response response;
 
-        ArticleModel model = gson.fromJson(response.body().charStream(), ArticleModel.class);
+    public static class Response {
 
+        public Response() {
+            articles = new ArrayList<>();
+        }
 
-        return model;
+        @SerializedName("docs")
+        public List<ArticleModel> articles;
     }
 
-    public static ArrayList<ArticleModel> deserializeToArticleModels(Response response) {
+        public ArticleDeserializer() {
+            response = new Response();
+        }
 
-        return null;
-    }
-
+        public static ArticleDeserializer parseJSON(String response) {
+            Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+            ArticleDeserializer articleDeserializer = gson.fromJson(response, ArticleDeserializer.class);
+            return articleDeserializer;
+        }
 }
