@@ -54,9 +54,9 @@ public class ArticleArrayAdapter extends ArrayAdapter<ArticleModel> {
 
         viewHolder.tvHeadline.setText(articleModel.headline.main);
         viewHolder.ivThumbnail.setImageResource(0);
-        
+
         if (articleModel.thumbnails.size() > 0) {
-            String imageUrl = articleModel.thumbnails.get(1).url;
+            String imageUrl = articleModel.thumbnails.get(0).url;
 
             Glide.with(getContext())
                     .load("http://www.nytimes.com/" + imageUrl)

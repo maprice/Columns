@@ -1,6 +1,8 @@
 package com.example.mprice.mpcolumn.providers;
 
 
+import com.example.mprice.mpcolumn.models.SortModel;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -27,11 +29,21 @@ public class ArticleProvider {
          client = new OkHttpClient();
     }
 
-    public void fetchArticle(String query, final HttpCallback callback) {
+    public void fetchArticle(String query, SortModel sortModel, final HttpCallback callback) {
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse("http://api.nytimes.com/svc/search/v2/articlesearch.json").newBuilder();
         urlBuilder.addQueryParameter("api-key", "611aafdd0c335311e4cc4c14a8917c9c:3:74321718");
         urlBuilder.addQueryParameter("q", query);
+
+        if (sortModel.newDeskSports) {
+            urlBuilder.addQueryParameter("fq", "news_desk:(\"Sports\")");
+        }
+
+        if (sortModel.order != SortModel.SortOrder.DEFAULT) {
+            urlBuilder.addQueryParameter("sort", sortModel.order.toParam());
+        }
+
+
         String url = urlBuilder.build().toString();
 
         Request request = new Request.Builder()
