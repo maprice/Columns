@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.example.mprice.mpcolumn.R;
 import com.example.mprice.mpcolumn.adapters.ArticleArrayAdapter;
@@ -20,6 +21,7 @@ import com.example.mprice.mpcolumn.models.SortModel;
 import com.example.mprice.mpcolumn.providers.ArticleProvider;
 import com.example.mprice.mpcolumn.serializer.ArticleDeserializer;
 import com.example.mprice.mpcolumn.utils.EndlessRecyclerViewScrollListener;
+import com.example.mprice.mpcolumn.utils.HidingScrollListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,9 +32,20 @@ import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity implements SortDialogFragment.OnFragmentInteractionListener, ArticleArrayAdapter.IOpenArticle {
 
+    public static class ToolBarHider extends RecyclerView.OnScrollListener {
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+        }
+
+    }
+
     @Bind(R.id.rvResults)
     RecyclerView rvResults;
 
+    Toolbar mToolbar;
+    private LinearLayout mToolbarContainer;
     private SortModel mSortModel;
     private String lastQuery;
     private ArticleProvider mArticleProvider;
@@ -44,14 +57,28 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
+
+
+
+
+        mToolbarContainer = (LinearLayout) findViewById(R.id.toolbarContainer);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         articles = new ArrayList<>();
         mArticleProvider = new ArticleProvider();
         mAdapter = new ArticleArrayAdapter(articles, this);
         mSortModel = new SortModel();
         rvResults.setAdapter(mAdapter);
+
+        rvResults.setOnScrollListener(new HidingScrollListener(this) {
+            @Override
+            public void onMoved(int distance) {
+                mToolbarContainer.setTranslationY(-distance);
+            }
+        });
 
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -67,17 +94,6 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
             }
         });
 
-//        rvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-//                ArticleModel articleModel = articles.get(position);
-//
-//                i.putExtra("url", articleModel.webUrl);
-//
-//                startActivity(i);
-//            }
-//        });
     }
 
     public void customLoadMoreDataFromApi(int offset) {
@@ -211,6 +227,23 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
         i.putExtra("url", articleModel.webUrl);
         startActivity(i);
     }
+
+    boolean isShowing = true;
+
+
+//    @Override
+//    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//        float y = ((RecyclerView)findViewById(R.id.rvResults)).getScrollY();
+//        if (y >= mToolbar.getHeight() && isShowing) {
+//            isShowing = false;
+//            mToolbar.animate().translationY(-mToolbar.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+//
+//        } else if ( y==0 && !isShowing) {
+//            isShowing = true;
+//            mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+//
+//        }
+//    }
 //
 //    public void onArticleSearch(View view) {
 //        if (view != null) {

@@ -17,5 +17,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:paddingTop="?attr/actionBarSize"
+        android:clipToPadding="false"
+        android:translationZ="2dp"
          />
 </RelativeLayout>
