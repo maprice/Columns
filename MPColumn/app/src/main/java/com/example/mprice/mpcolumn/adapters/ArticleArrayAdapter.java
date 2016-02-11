@@ -58,11 +58,14 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
         holder.ivThumbnail.setImageResource(0);
 
         if (model.thumbnails.size() > 0) {
+            holder.tvSnippet.setText("");
             String imageUrl = model.thumbnails.get(0).url;
 
             Glide.with(holder.ivThumbnail.getContext())
                     .load("http://www.nytimes.com/" + imageUrl)
                     .into(holder.ivThumbnail);
+        } else {
+            holder.tvSnippet.setText(model.snippet);
         }
     }
 
@@ -77,6 +80,9 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
 
         @Bind(R.id.tvHeadline)
         TextView tvHeadline;
+
+        @Bind(R.id.tvSnippet)
+        TextView tvSnippet;
 
         public IMyViewHolderClicks mListener;
 
@@ -105,30 +111,5 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
         mListener = listener;
     }
 
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        ArticleModel articleModel = getItem(position);
-//
-//        ViewHolder viewHolder;
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_article_result, parent, false);
-//
-//            viewHolder = new ViewHolder(convertView);
-//            convertView.setTag(viewHolder);
-//        } else {
-//            viewHolder = (ViewHolder) convertView.getTag();
-//        }
-//
-//        viewHolder.tvHeadline.setText(articleModel.headline.main);
-//        viewHolder.ivThumbnail.setImageResource(0);
-//
-//        if (articleModel.thumbnails.size() > 0) {
-//            String imageUrl = articleModel.thumbnails.get(0).url;
-//
-//            Glide.with(getContext())
-//                    .load("http://www.nytimes.com/" + imageUrl)
-//                    .into(viewHolder.ivThumbnail);
-//        }
-//        return convertView;
-//    }
+
 }

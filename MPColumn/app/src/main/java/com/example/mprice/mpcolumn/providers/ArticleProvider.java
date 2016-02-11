@@ -34,7 +34,7 @@ public class ArticleProvider {
         HttpUrl.Builder urlBuilder = HttpUrl.parse("http://api.nytimes.com/svc/search/v2/articlesearch.json").newBuilder();
         urlBuilder.addQueryParameter("api-key", "611aafdd0c335311e4cc4c14a8917c9c:3:74321718");
         urlBuilder.addQueryParameter("q", query);
-        urlBuilder.addQueryParameter("page", String.valueOf(offset/10));
+        urlBuilder.addQueryParameter("page", String.valueOf(offset));
         if (sortModel.newDeskSports) {
             urlBuilder.addQueryParameter("fq", "news_desk:(\"Sports\")");
         }

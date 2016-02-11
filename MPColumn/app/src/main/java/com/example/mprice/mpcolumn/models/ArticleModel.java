@@ -19,6 +19,9 @@ public class ArticleModel {
     @SerializedName("multimedia")
     public List<ArticleThumbnail> thumbnails;
 
+    @SerializedName("snippet")
+    public String snippet;
+
     public ArticleModel() {
         thumbnails = new ArrayList<>();
     }
