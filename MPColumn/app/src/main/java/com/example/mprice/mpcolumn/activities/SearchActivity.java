@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
 import com.example.mprice.mpcolumn.R;
 import com.example.mprice.mpcolumn.adapters.ArticleArrayAdapter;
@@ -28,10 +27,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Response;
 
-public class SearchActivity extends AppCompatActivity implements SortDialogFragment.OnFragmentInteractionListener {
+public class SearchActivity extends AppCompatActivity implements SortDialogFragment.OnFragmentInteractionListener, ArticleArrayAdapter.IOpenArticle {
 
-    @Bind(R.id.gvResults)
-    GridView gvResults;
+    @Bind(R.id.rvResults)
+    RecyclerView rvResults;
 
     private SortModel mSortModel;
 
@@ -49,21 +48,22 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 
         articles = new ArrayList<>();
         mArticleProvider = new ArticleProvider();
-        mAdapter = new ArticleArrayAdapter(this, articles);
+        mAdapter = new ArticleArrayAdapter(articles, this);
         mSortModel = new SortModel();
-        gvResults.setAdapter(mAdapter);
+        rvResults.setAdapter(mAdapter);
+        rvResults.setLayoutManager(new LinearLayoutManager(this));
 
-        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-                ArticleModel articleModel = articles.get(position);
-
-                i.putExtra("url", articleModel.webUrl);
-
-                startActivity(i);
-            }
-        });
+//        rvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
+//                ArticleModel articleModel = articles.get(position);
+//
+//                i.putExtra("url", articleModel.webUrl);
+//
+//                startActivity(i);
+//            }
+//        });
     }
 
 
@@ -149,6 +149,13 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
     @Override
     public void onSaveSelected(SortModel sortModel) {
         mSortModel = sortModel;
+    }
+
+    @Override
+    public void openArticle(ArticleModel articleModel) {
+        Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
+        i.putExtra("url", articleModel.webUrl);
+        startActivity(i);
     }
 //
 //    public void onArticleSearch(View view) {

@@ -1,10 +1,10 @@
 package com.example.mprice.mpcolumn.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,48 +20,115 @@ import butterknife.ButterKnife;
 /**
  * Created by mprice on 2/7/16.
  */
-public class ArticleArrayAdapter extends ArrayAdapter<ArticleModel> {
+public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapter.ViewHolder> {
 
-    public static class ViewHolder {
+
+    public static interface IOpenArticle {
+        public void openArticle(ArticleModel articleModel);
+    }
+
+    List<ArticleModel> mArticles;
+    IOpenArticle mListener;
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        // Inflate the custom layout
+        View contactView = inflater.inflate(R.layout.item_article_result, parent, false);
+
+        // Return a new holder instance
+        ViewHolder viewHolder = new ViewHolder(contactView, new ViewHolder.IMyViewHolderClicks() {
+
+            @Override
+            public void onArticleClicked(View caller, int position) {
+                ArticleModel model = mArticles.get(position);
+                mListener.openArticle(model);
+            }
+        });
+
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        ArticleModel model = mArticles.get(position);
+
+        holder.tvHeadline.setText(model.headline.main);
+        holder.ivThumbnail.setImageResource(0);
+
+        if (model.thumbnails.size() > 0) {
+            String imageUrl = model.thumbnails.get(0).url;
+
+            Glide.with(holder.ivThumbnail.getContext())
+                    .load("http://www.nytimes.com/" + imageUrl)
+                    .into(holder.ivThumbnail);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mArticles.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.ivThumbnail)
         ImageView ivThumbnail;
 
         @Bind(R.id.tvHeadline)
         TextView tvHeadline;
 
-        public ViewHolder(View view) {
+        public IMyViewHolderClicks mListener;
+
+        public ViewHolder(View view,  IMyViewHolderClicks listener) {
+            super(view);
+            mListener = listener;
+
+            view.setOnClickListener(this);
             ButterKnife.bind(this, view);
         }
-    }
 
-    public ArticleArrayAdapter(Context context, List<ArticleModel> objects) {
-        super(context, android.R.layout.simple_list_item_1, objects);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ArticleModel articleModel = getItem(position);
-
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_article_result, parent, false);
-
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+        @Override
+        public void onClick(View v) {
+            mListener.onArticleClicked(v, getAdapterPosition());
         }
 
-        viewHolder.tvHeadline.setText(articleModel.headline.main);
-        viewHolder.ivThumbnail.setImageResource(0);
-
-        if (articleModel.thumbnails.size() > 0) {
-            String imageUrl = articleModel.thumbnails.get(0).url;
-
-            Glide.with(getContext())
-                    .load("http://www.nytimes.com/" + imageUrl)
-                    .into(viewHolder.ivThumbnail);
+        public  interface IMyViewHolderClicks {
+             void onArticleClicked(View caller, int position);
         }
-        return convertView;
     }
+
+
+
+    public ArticleArrayAdapter(List<ArticleModel> objects, IOpenArticle listener) {
+        mArticles = objects;
+        mListener = listener;
+    }
+
+//    @Override
+//    public View getView(int position, View convertView, ViewGroup parent) {
+//        ArticleModel articleModel = getItem(position);
+//
+//        ViewHolder viewHolder;
+//        if (convertView == null) {
+//            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_article_result, parent, false);
+//
+//            viewHolder = new ViewHolder(convertView);
+//            convertView.setTag(viewHolder);
+//        } else {
+//            viewHolder = (ViewHolder) convertView.getTag();
+//        }
+//
+//        viewHolder.tvHeadline.setText(articleModel.headline.main);
+//        viewHolder.ivThumbnail.setImageResource(0);
+//
+//        if (articleModel.thumbnails.size() > 0) {
+//            String imageUrl = articleModel.thumbnails.get(0).url;
+//
+//            Glide.with(getContext())
+//                    .load("http://www.nytimes.com/" + imageUrl)
+//                    .into(viewHolder.ivThumbnail);
+//        }
+//        return convertView;
+//    }
 }
