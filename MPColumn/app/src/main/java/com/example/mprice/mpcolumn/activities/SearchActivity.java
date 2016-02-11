@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +19,7 @@ import com.example.mprice.mpcolumn.models.ArticleModel;
 import com.example.mprice.mpcolumn.models.SortModel;
 import com.example.mprice.mpcolumn.providers.ArticleProvider;
 import com.example.mprice.mpcolumn.serializer.ArticleDeserializer;
+import com.example.mprice.mpcolumn.utils.EndlessRecyclerViewScrollListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
     RecyclerView rvResults;
 
     private SortModel mSortModel;
-
+    private String lastQuery;
     private ArticleProvider mArticleProvider;
     private ArrayList<ArticleModel> articles;
     private ArticleArrayAdapter mAdapter;
@@ -51,7 +52,20 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
         mAdapter = new ArticleArrayAdapter(articles, this);
         mSortModel = new SortModel();
         rvResults.setAdapter(mAdapter);
-        rvResults.setLayoutManager(new LinearLayoutManager(this));
+
+        StaggeredGridLayoutManager gridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        rvResults.setLayoutManager(gridLayoutManager);
+
+        rvResults.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                customLoadMoreDataFromApi(page);
+            }
+        });
 
 //        rvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -66,6 +80,47 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 //        });
     }
 
+    public void customLoadMoreDataFromApi(int offset) {
+        // Send an API request to retrieve appropriate data using the offset value as a parameter.
+        // Deserialize API response and then construct new objects to append to the adapter
+        // Add the new objects to the data source for the adapter
+        mArticleProvider.fetchArticle(lastQuery, mSortModel, offset, new ArticleProvider.HttpCallback() {
+            @Override
+            public void onFailure(Response response, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response) {
+                try {
+                    String stringResponse = response.body().string();
+                    final ArticleDeserializer articleDeserializer = ArticleDeserializer.parseJSON(stringResponse);
+
+                    SearchActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+                            articles.addAll(articleDeserializer.response.articles);
+                            // For efficiency purposes, notify the adapter of only the elements that got changed
+                            // curSize will equal to the index of the first element inserted because the list is 0-indexed
+                            int curSize = mAdapter.getItemCount();
+                            mAdapter.notifyItemRangeInserted(curSize, articles.size() - 1);
+
+
+                        }
+                    });
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,9 +170,8 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
     }
 
     private void searchForArticle(String query) {
-
-
-        mArticleProvider.fetchArticle(query, mSortModel, new ArticleProvider.HttpCallback() {
+        lastQuery = query;
+        mArticleProvider.fetchArticle(query, mSortModel, 0, new ArticleProvider.HttpCallback() {
             @Override
             public void onFailure(Response response, Throwable throwable) {
 
