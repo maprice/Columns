@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,18 +29,11 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity implements SortDialogFragment.OnFragmentInteractionListener, ArticleArrayAdapter.IOpenArticle {
 
-    public static class ToolBarHider extends RecyclerView.OnScrollListener {
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-        }
-
-    }
 
     @Bind(R.id.rvResults)
     RecyclerView rvResults;
@@ -71,7 +65,11 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
         mArticleProvider = new ArticleProvider();
         mAdapter = new ArticleArrayAdapter(articles, this);
         mSortModel = new SortModel();
-        rvResults.setAdapter(mAdapter);
+        //rvResults.setAdapter();
+
+        ScaleInAnimationAdapter alphaAdapter = new ScaleInAnimationAdapter(mAdapter);
+        alphaAdapter.setFirstOnly(false);
+        rvResults.setAdapter(alphaAdapter);
 
         rvResults.setOnScrollListener(new HidingScrollListener(this) {
             @Override
@@ -93,6 +91,9 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
                 customLoadMoreDataFromApi(page);
             }
         });
+
+
+       // rvResults.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
 
     }
 
@@ -187,6 +188,12 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 
     private void searchForArticle(String query) {
         lastQuery = query;
+        int start = articles.size();
+        articles.clear();
+        if (start > 0) {
+            mAdapter.notifyItemRangeRemoved(0, start);
+        }
+
         mArticleProvider.fetchArticle(query, mSortModel, 0, new ArticleProvider.HttpCallback() {
             @Override
             public void onFailure(Response response, Throwable throwable) {
@@ -202,9 +209,14 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
                     SearchActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            articles.clear();
+
+
                             articles.addAll(articleDeserializer.response.articles);
-                            mAdapter.notifyDataSetChanged();
+
+                            Log.e("sdgsdfg", "I searched: " + articles.size());
+                            mAdapter.notifyItemRangeInserted(0, articles.size() - 1);
+
+                            // mAdapter.notifyDataSetChanged();
                         }
                     });
 
@@ -214,6 +226,7 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
                 }
             }
         });
+
     }
 
     @Override
