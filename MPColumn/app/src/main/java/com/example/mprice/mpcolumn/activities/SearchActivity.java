@@ -1,6 +1,9 @@
 package com.example.mprice.mpcolumn.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -15,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.example.mprice.mpcolumn.R;
 import com.example.mprice.mpcolumn.adapters.ArticleArrayAdapter;
@@ -165,11 +169,18 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
         return super.onOptionsItemSelected(item);
     }
 
+    private Boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -180,6 +191,8 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();
+
+                searchItem.collapseActionView();
 
                 return true;
             }
@@ -193,11 +206,23 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
     }
 
     private void searchForArticle(String query) {
+
+        if (!isNetworkAvailable()) {
+            Context context = getApplicationContext();
+            CharSequence text = "No Network Connection";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+            return;
+        }
+
+
         lastQuery = query;
         int start = articles.size();
         articles.clear();
         if (start > 0) {
             mAdapter.notifyItemRangeRemoved(0, start);
+
         }
 
         mArticleProvider.fetchArticle(query, mSortModel, 0, new ArticleProvider.HttpCallback() {
@@ -219,11 +244,11 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 
                             articles.addAll(articleDeserializer.response.articles);
 
-                            mAdapter.notifyItemRangeInserted(0, articles.size() - 1);
+                            mAdapter.notifyItemRangeInserted(0, articles.size());
 
                             svNull_state.setVisibility(View.GONE);
                             rvResults.setVisibility(View.VISIBLE);
-
+                            rvResults.scrollToPosition(0);
                         }
                     });
 
@@ -269,7 +294,7 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
         } else if (ID == R.id.ivWorld) {
             mSortModel.newDeskWorld = true;
         }
-
+        mToolbar.getMenu().getItem(1).setIcon(getResources().getDrawable(R.drawable.filter_full));
         searchForArticle("Sports");
     }
 }
