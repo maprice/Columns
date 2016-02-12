@@ -2,6 +2,7 @@
 Is a news reader app that lets users search the New York times article database and read articles. 
 
 ## Features
+All required and optional user stories completed
 - [x] User can enter a search query that will display a grid of news articles using the thumbnail and headline from the New York Times Search API.
 - [x] User can click on "settings" which allows selection of advanced search options to filter results. 
 - [x] User can configure advanced search filters such as:
@@ -27,6 +28,7 @@ Is a news reader app that lets users search the New York times article database 
 - [x] Soft Toolbar: Toolbar is hidden when user scrolls down, and reappears when user scrolls back up
 - [x] Splash Screen
 - [x] Dynamic Toolbar menu items: When filters are set, solid filter icon, when they are empty, empty filter icon.
+- [x] Category chooser nullstate:  When user has not yet entered a search, display an array of category options.
 
 ## Demo
 ### Basic user flow
