@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -157,6 +156,7 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 
             FragmentManager fm = getSupportFragmentManager();
             SortDialogFragment editNameDialog = SortDialogFragment.newInstance(mSortModel);
+
             editNameDialog.show(fm, "fragment_edit_name");
 
             return true;
@@ -219,13 +219,11 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 
                             articles.addAll(articleDeserializer.response.articles);
 
-                            Log.e("sdgsdfg", "I searched: " + articles.size());
                             mAdapter.notifyItemRangeInserted(0, articles.size() - 1);
 
                             svNull_state.setVisibility(View.GONE);
                             rvResults.setVisibility(View.VISIBLE);
 
-                            // mAdapter.notifyDataSetChanged();
                         }
                     });
 
@@ -250,15 +248,21 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
         startActivity(i);
     }
 
-    boolean isShowing = true;
-
     public void onCategoryClick(View view) {
         int ID = view.getId();
-        if (ID == R.id.ivSports) {
-            searchForArticle("Sports");
+        if (ID == R.id.ivArts) {
+            mSortModel.newDeskArts = true;
+        } else if (ID == R.id.ivSports) {
+            mSortModel.newDeskSports = true;
+        } else if (ID == R.id.ivScience) {
+            mSortModel.newDeskScience = true;
+        } else if (ID == R.id.ivTechnology) {
+            mSortModel.newDeskTechnology = true;
+        } else if (ID == R.id.ivWorld) {
+            mSortModel.newDeskWorld = true;
         }
 
-
+        searchForArticle("Sports");
     }
 
 

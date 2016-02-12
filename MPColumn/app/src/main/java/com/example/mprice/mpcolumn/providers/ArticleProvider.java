@@ -35,9 +35,34 @@ public class ArticleProvider {
         urlBuilder.addQueryParameter("api-key", "611aafdd0c335311e4cc4c14a8917c9c:3:74321718");
         urlBuilder.addQueryParameter("q", query);
         urlBuilder.addQueryParameter("page", String.valueOf(offset));
-        if (sortModel.newDeskSports) {
-            urlBuilder.addQueryParameter("fq", "news_desk:(\"Sports\")");
+
+        StringBuilder tmp = new StringBuilder();
+
+        if (sortModel.newDeskArts) {
+            tmp.append("\"Arts\" ");
         }
+        if (sortModel.newDeskSports) {
+            tmp.append("\"Sports\" ");
+        }
+        if (sortModel.newDeskScience) {
+            tmp.append("\"Science\" ");
+        }
+        if (sortModel.newDeskTechnology) {
+            tmp.append("\"Technology\" ");
+        }
+        if (sortModel.newDeskWorld) {
+            tmp.append("\"World\" ");
+        }
+
+        if (!tmp.toString().isEmpty()) {
+            tmp.insert(0, "news_desk:(");
+            tmp.append(")");
+            urlBuilder.addQueryParameter("fq", tmp.toString());
+        }
+
+
+        String beginDate = sortModel.beginDateYear + "" +  sortModel.beginDateMonth + "" + sortModel.beginDateDay;
+        urlBuilder.addQueryParameter("being_date", beginDate);
 
         if (sortModel.order != SortModel.SortOrder.DEFAULT) {
             urlBuilder.addQueryParameter("sort", sortModel.order.toParam());

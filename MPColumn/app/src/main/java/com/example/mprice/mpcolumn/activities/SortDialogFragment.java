@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,6 +32,15 @@ public class SortDialogFragment extends DialogFragment {
 
     @Bind(R.id.cbSports)
     CheckBox cbSports;
+
+    @Bind(R.id.cbScience)
+    CheckBox cbScience;
+
+    @Bind(R.id.cbTechnology)
+    CheckBox cbTechnology;
+
+    @Bind(R.id.cbWorld)
+    CheckBox cbWorld;
 
     @Bind(R.id.sSortOrder)
     Spinner sSortOrder;
@@ -65,6 +75,8 @@ public class SortDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
              mSortModel = Parcels.unwrap(getArguments().getParcelable(ARG_SORT_MODEL));
         }
@@ -115,7 +127,7 @@ public class SortDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sort_dialog, container, false);
         ButterKnife.bind(this, view);
-
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         this.configureView();
 
         return view;

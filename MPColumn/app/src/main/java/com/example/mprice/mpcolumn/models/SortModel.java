@@ -38,6 +38,9 @@ public class SortModel {
 
     public boolean newDeskArts;
     public boolean newDeskSports;
+    public boolean newDeskScience;
+    public boolean newDeskTechnology;
+    public boolean newDeskWorld;
 
     public SortModel() {
         beginDateDay = 1;
@@ -48,5 +51,8 @@ public class SortModel {
 
         newDeskArts = false;
         newDeskSports = false;
+       newDeskScience = false;
+       newDeskTechnology = false;
+       newDeskWorld = false;
     }
 }

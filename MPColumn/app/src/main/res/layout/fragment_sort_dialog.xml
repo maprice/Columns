@@ -5,7 +5,8 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="6dp">
 
 
     <TextView
@@ -13,20 +14,21 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Begin Date"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/tvBeginDate"
+        android:layout_below="@+id/divider2"
+
+
+        />
 
     <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dpBeginDate"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
+
+        android:layout_below="@+id/tvBeginDate"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
+        android:datePickerMode="spinner"
+        android:layout_centerHorizontal="true"/>
 
 
     <View
@@ -34,7 +36,7 @@
         android:padding="10dp"
         android:layout_height="1dp"
         android:background="#AAAAAA"
-        android:layout_below="@id/dpBeginDate"
+        android:layout_below="@+id/cbWorld"
         android:id="@+id/divider1"></View>
 
     <TextView
@@ -67,9 +69,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="News and Desk Values"
+        android:text="Categories"
         android:id="@+id/textView3"
-        android:layout_below="@+id/divider2"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -78,9 +80,8 @@
         android:layout_height="wrap_content"
         android:text="Arts"
         android:id="@+id/cbArts"
-        android:layout_below="@+id/divider2"
-        android:layout_toRightOf="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_below="@+id/textView3"
+        android:layout_marginLeft="30dp"/>
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -88,8 +89,37 @@
         android:text="Sports"
         android:id="@+id/cbSports"
         android:layout_below="@+id/cbArts"
-        android:layout_alignLeft="@+id/cbArts"
-        android:layout_alignStart="@+id/cbArts" />
+        android:layout_marginLeft="30dp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Science"
+        android:id="@+id/cbScience"
+        android:layout_below="@+id/cbSports"
+        android:layout_marginLeft="30dp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Technology"
+        android:id="@+id/cbTechnology"
+        android:layout_below="@+id/cbScience"
+        android:layout_marginLeft="30dp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="World"
+        android:id="@+id/cbWorld"
+        android:layout_below="@+id/cbTechnology"
+        android:layout_marginLeft="30dp"
+        />
+
+
 
     <Button
         android:layout_width="wrap_content"
