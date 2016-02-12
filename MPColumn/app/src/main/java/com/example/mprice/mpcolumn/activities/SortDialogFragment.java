@@ -51,6 +51,9 @@ public class SortDialogFragment extends DialogFragment {
     @Bind(R.id.btnSave)
     Button btnSave;
 
+    @Bind(R.id.btnReset)
+    Button btnReset;
+
     private static final String ARG_SORT_MODEL = "sortModel";
 
     private SortModel mSortModel;
@@ -100,7 +103,7 @@ public class SortDialogFragment extends DialogFragment {
 
                 mSortModel.newDeskSports = cbSports.isChecked();
                 mSortModel.newDeskArts = cbArts.isChecked();
-                mSortModel.order = (SortModel.SortOrder)sSortOrder.getSelectedItem();
+                mSortModel.order = (SortModel.SortOrder) sSortOrder.getSelectedItem();
                 mSortModel.beginDateDay = dpBeginDate.getDayOfMonth();
                 mSortModel.beginDateMonth = dpBeginDate.getMonth();
                 mSortModel.beginDateYear = dpBeginDate.getYear();
@@ -116,6 +119,17 @@ public class SortDialogFragment extends DialogFragment {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getDialog().dismiss();
+            }
+        });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onResetSelected();
+                }
+
                 getDialog().dismiss();
             }
         });
@@ -154,6 +168,7 @@ public class SortDialogFragment extends DialogFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onSaveSelected(SortModel sortModel);
+        public void onResetSelected();
     }
 
 }

@@ -239,6 +239,14 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
     @Override
     public void onSaveSelected(SortModel sortModel) {
         mSortModel = sortModel;
+
+        mToolbar.getMenu().getItem(1).setIcon(getResources().getDrawable(R.drawable.filter_full));
+    }
+
+    @Override
+    public void onResetSelected() {
+        mSortModel = new SortModel();
+        mToolbar.getMenu().getItem(1).setIcon(getResources().getDrawable(R.drawable.filter_empty));
     }
 
     @Override
@@ -264,29 +272,4 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 
         searchForArticle("Sports");
     }
-
-
-//    @Override
-//    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//        float y = ((RecyclerView)findViewById(R.id.rvResults)).getScrollY();
-//        if (y >= mToolbar.getHeight() && isShowing) {
-//            isShowing = false;
-//            mToolbar.animate().translationY(-mToolbar.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
-//
-//        } else if ( y==0 && !isShowing) {
-//            isShowing = true;
-//            mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-//
-//        }
-//    }
-//
-//    public void onArticleSearch(View view) {
-//        if (view != null) {
-//            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//        }
-//       String query = etQuery.getText().toString();
-//        searchForArticle(query);
-//
-//    }
 }
