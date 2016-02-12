@@ -1,11 +1,8 @@
 <resources>
-    <string name="app_name">MPColumn</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Columns</string>
+    <string name="action_settings">Filter</string>
     <string name="search_text_hint">Enter Search Text</string>
     <string name="button_text_search">Search</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="sort_array">
         <item>Newest</item>

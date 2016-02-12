@@ -1,25 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_main" tools:context=".MainActivity">
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/svNull_state"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:paddingTop="?attr/actionBarSize">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivSports"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:onClick="onCategoryClick"
+            android:layout_marginTop="@dimen/null_state_margin"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sports_home" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/ivSports"
+            android:background="@color/titleOverlay"
+            android:gravity="right"
+            android:text="Sports"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivArts"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/ivSports"
+            android:onClick="onCategoryClick"
+            android:layout_marginTop="@dimen/null_state_margin"
+            android:scaleType="centerCrop"
+            android:src="@drawable/arts_home" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/ivArts"
+            android:background="@color/titleOverlay"
+            android:gravity="right"
+            android:text="Arts"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivScience"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/ivArts"
+            android:onClick="onCategoryClick"
+            android:layout_marginTop="@dimen/null_state_margin"
+            android:scaleType="centerCrop"
+            android:src="@drawable/science_home" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/ivScience"
+            android:background="@color/titleOverlay"
+            android:gravity="right"
+            android:text="Science"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:columnCount="4"
-        android:rowCount="4">
+        <ImageView
+            android:id="@+id/ivTechnology"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/ivScience"
+            android:onClick="onCategoryClick"
+            android:layout_marginTop="@dimen/null_state_margin"
+            android:scaleType="centerCrop"
+            android:src="@drawable/technology_home" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/ivTechnology"
+            android:background="@color/titleOverlay"
+            android:gravity="right"
+            android:text="Technology"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
 
 
-    </GridLayout>
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/ivWorld"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/ivTechnology"
+            android:onClick="onCategoryClick"
+            android:layout_marginTop="@dimen/null_state_margin"
+            android:scaleType="centerCrop"
+            android:src="@drawable/world_png" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/ivWorld"
+            android:background="@color/titleOverlay"
+            android:gravity="right"
+            android:text="World"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+</ScrollView>

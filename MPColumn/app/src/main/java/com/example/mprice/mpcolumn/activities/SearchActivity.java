@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.mprice.mpcolumn.R;
 import com.example.mprice.mpcolumn.adapters.ArticleArrayAdapter;
@@ -38,6 +40,9 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
     @Bind(R.id.rvResults)
     RecyclerView rvResults;
 
+    @Bind(R.id.svNull_state)
+    ScrollView svNull_state;
+
     Toolbar mToolbar;
     private LinearLayout mToolbarContainer;
     private SortModel mSortModel;
@@ -53,7 +58,8 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
 
 
 
-
+        svNull_state.setVisibility(View.VISIBLE);
+        rvResults.setVisibility(View.GONE);
 
 
 
@@ -216,6 +222,9 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
                             Log.e("sdgsdfg", "I searched: " + articles.size());
                             mAdapter.notifyItemRangeInserted(0, articles.size() - 1);
 
+                            svNull_state.setVisibility(View.GONE);
+                            rvResults.setVisibility(View.VISIBLE);
+
                             // mAdapter.notifyDataSetChanged();
                         }
                     });
@@ -242,6 +251,15 @@ public class SearchActivity extends AppCompatActivity implements SortDialogFragm
     }
 
     boolean isShowing = true;
+
+    public void onCategoryClick(View view) {
+        int ID = view.getId();
+        if (ID == R.id.ivSports) {
+            searchForArticle("Sports");
+        }
+
+
+    }
 
 
 //    @Override
