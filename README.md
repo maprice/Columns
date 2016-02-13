@@ -13,10 +13,10 @@ All required and optional user stories completed
 - [x] User can tap on any article in results to view the contents in an embedded browser. 
 - [x] User can scroll down "infinitely" to continue loading more news articles. The maximum number of articles is limited by the API search. 
 - [x] Robust error handling, check if internet is available, handle error cases, network failures.
-- [x] Use the ActionBar SearchView as the query box
+- [x] ActionBar SearchView as the query box
 - [x] User can share a link to their friends or email it to themselves. 
 - [x] Filter Settings displayed with a lightweight modal overlay.
-- [x] Use the RecyclerView with the StaggeredGridLayoutManager to display improve the grid of image results 
+- [x] RecyclerView with the StaggeredGridLayoutManager to display improve the grid of image results 
 - [x] For different news articles that only have text or have text with thumbnails, use Heterogenous Layouts with RecyclerView. 
 - [x] Apply the popular ButterKnife annotation library to reduce view boilerplate. 
 - [x] Use Parcelable to pass Articles between activities
@@ -28,8 +28,8 @@ All required and optional user stories completed
 - [x] Soft Toolbar: Toolbar is hidden when user scrolls down, and reappears when user scrolls back up
 - [x] Splash Screen
 - [x] Dynamic Toolbar menu items: When filters are set, solid filter icon, when they are empty, empty filter icon.
-- [x] Category chooser nullstate:  When user has not yet entered a search, display an array of category options.
-- [x] Image loading placeholder:  Display default loading image while waiting
+- [x] Category chooser null state:  When user has not yet entered a search, display an array of category options that auto populate filter.
+- [x] Image loading placeholder:  Display default loading image while downloading image
 - [x] Progress bar:  Display progress bar while loading news article
 
 ## Demo
@@ -52,7 +52,7 @@ All required and optional user stories completed
 - [OKHttp](http://square.github.io/okhttp/) Networking
 - [RecyclerView Animators](https://github.com/wasabeef/recyclerview-animators) RecyclerView Animiations
 - [Parceler](https://github.com/johncarl81/parceler) Android Parcelables made easy through code generation
-
+- [Hiding Scroll Listener](https://mzgreen.github.io/2015/02/28/How-to-hideshow-Toolbar-when-list-is-scrolling(part2)/) Hide Toolbar while scrolling
 
 ### Images
 - [Icons8](https://icons8.com/android-icons/) Search, Filter icons
