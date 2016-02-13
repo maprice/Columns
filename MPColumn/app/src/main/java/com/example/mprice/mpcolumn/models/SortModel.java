@@ -15,7 +15,7 @@ public class SortModel {
         private String friendlyName;
         private String paramName;
 
-        private SortOrder(String friendlyName, String param) {
+        SortOrder(String friendlyName, String param) {
             this.friendlyName = friendlyName;
             this.paramName = param;
         }
@@ -51,8 +51,8 @@ public class SortModel {
 
         newDeskArts = false;
         newDeskSports = false;
-       newDeskScience = false;
-       newDeskTechnology = false;
-       newDeskWorld = false;
+        newDeskScience = false;
+        newDeskTechnology = false;
+        newDeskWorld = false;
     }
 }

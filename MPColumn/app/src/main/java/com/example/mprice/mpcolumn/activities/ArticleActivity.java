@@ -16,6 +16,9 @@ import com.example.mprice.mpcolumn.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * Created by mprice on 2/12/16.
+ */
 public class ArticleActivity extends AppCompatActivity {
 
     @Bind(R.id.wvArticle)

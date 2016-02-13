@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">Columns</string>
-    <string name="action_settings">Filter</string>
+    <string name="action_filter">Filter</string>
     <string name="search_text_hint">Enter Search Text</string>
     <string name="button_text_search">Search</string>
+
+    <string name="null_state_world">World</string>
+    <string name="null_state_tech">Technology</string>
+    <string name="null_state_science">Science</string>
+    <string name="null_state_sports">Sports</string>
+    <string name="null_state_arts">Arts</string>
+
+    <string name="filter_being_date">Begin Date</string>
+    <string name="filter_sort_order">Sort Order</string>
+    <string name="filter_categories">Categories</string>
+
+    <string name="filter_btn_cancel">Cancel</string>
+    <string name="filter_btn_save">Save</string>
+    <string name="filter_btn_reset">Reset</string>
 
     <string-array name="sort_array">
         <item>Newest</item>

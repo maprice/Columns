@@ -22,13 +22,15 @@ import butterknife.ButterKnife;
  */
 public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapter.ViewHolder> {
 
+    private static final String nyUrl = "http://www.nytimes.com/";
 
-    public static interface IOpenArticle {
-        public void openArticle(ArticleModel articleModel);
+    public interface IOpenArticle {
+         void openArticle(ArticleModel articleModel);
     }
 
-    List<ArticleModel> mArticles;
-    IOpenArticle mListener;
+    private List<ArticleModel> mArticles;
+    private IOpenArticle mListener;
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -62,7 +64,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
             String imageUrl = model.thumbnails.get(0).url;
 
             Glide.with(holder.ivThumbnail.getContext())
-                    .load("http://www.nytimes.com/" + imageUrl)
+                    .load(nyUrl + imageUrl)
                     .into(holder.ivThumbnail);
         } else {
             holder.tvSnippet.setText(model.snippet);
@@ -104,12 +106,8 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
         }
     }
 
-
-
     public ArticleArrayAdapter(List<ArticleModel> objects, IOpenArticle listener) {
         mArticles = objects;
         mListener = listener;
     }
-
-
 }

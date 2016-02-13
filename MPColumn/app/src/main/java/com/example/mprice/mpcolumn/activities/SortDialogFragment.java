@@ -21,8 +21,10 @@ import org.parceler.Parcels;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * Created by mprice on 2/12/16.
+ */
 public class SortDialogFragment extends DialogFragment {
-
 
     @Bind(R.id.dpBeginDate)
     DatePicker dpBeginDate;
@@ -55,21 +57,23 @@ public class SortDialogFragment extends DialogFragment {
     Button btnReset;
 
     private static final String ARG_SORT_MODEL = "sortModel";
-
     private SortModel mSortModel;
-
     private OnFragmentInteractionListener mListener;
+
+    public interface OnFragmentInteractionListener {
+        void onSaveSelected(SortModel sortModel);
+        void onResetSelected();
+    }
 
     public static SortDialogFragment newInstance(SortModel mSortModel) {
         SortDialogFragment fragment = new SortDialogFragment();
         Bundle args = new Bundle();
 
         args.putParcelable(ARG_SORT_MODEL, Parcels.wrap(mSortModel));
-
         fragment.setArguments(args);
+
         return fragment;
     }
-
 
     public SortDialogFragment() {
         // Required empty public constructor
@@ -78,13 +82,9 @@ public class SortDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         if (getArguments() != null) {
              mSortModel = Parcels.unwrap(getArguments().getParcelable(ARG_SORT_MODEL));
         }
-
-
     }
 
     private void configureView() {
@@ -99,8 +99,6 @@ public class SortDialogFragment extends DialogFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 mSortModel.newDeskSports = cbSports.isChecked();
                 mSortModel.newDeskArts = cbArts.isChecked();
                 mSortModel.order = (SortModel.SortOrder) sSortOrder.getSelectedItem();
@@ -163,12 +161,4 @@ public class SortDialogFragment extends DialogFragment {
         super.onDetach();
         mListener = null;
     }
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onSaveSelected(SortModel sortModel);
-        public void onResetSelected();
-    }
-
 }

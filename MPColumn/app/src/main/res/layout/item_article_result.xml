@@ -2,37 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="4dp"
-    android:background="@color/app_fore_ground">
-
+    android:background="@color/app_fore_ground"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvSnippet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-            android:layout_below="@+id/vHeader"
-        android:paddingTop="5dp"
-        android:text="Snippet"
+        android:layout_below="@+id/vHeader"
         android:paddingLeft="4dp"
-        android:textColor="@color/text_dark"
-         />
+        android:paddingTop="5dp"
+        android:textColor="@color/text_dark" />
 
     <ImageView
         android:id="@+id/ivThumbnail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        android:maxHeight="300dp"/>
+        android:maxHeight="300dp"
+        android:scaleType="fitCenter" />
 
     <View
         android:id="@+id/vHeader"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:background="@color/titleOverlay"></View>
+        android:background="@color/titleOverlay" />
 
     <TextView
         android:id="@+id/tvHeadline"
@@ -43,10 +40,8 @@
         android:layout_gravity="center_horizontal"
         android:ellipsize="end"
         android:maxLines="1"
-        android:paddingTop="5dp"
         android:paddingLeft="4dp"
-        android:text="Headline"
+        android:paddingTop="5dp"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
-
 </RelativeLayout>

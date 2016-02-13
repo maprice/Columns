@@ -1,153 +1,139 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mprice.mpcolumn.activities.SortDialogFragment">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="6dp">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Begin Date"
-        android:id="@+id/tvBeginDate"
-        android:layout_below="@+id/divider2"
-
-
-        />
-
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dpBeginDate"
-
-        android:layout_below="@+id/tvBeginDate"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:layout_centerHorizontal="true"/>
-
-
-    <View
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="10dp"
-        android:layout_height="1dp"
-        android:background="#AAAAAA"
-        android:layout_below="@+id/cbWorld"
-        android:id="@+id/divider1"></View>
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Sort Order"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/divider1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:padding="6dp">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sSortOrder"
-        android:layout_below="@+id/divider1"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"/>
+        <TextView
+            android:id="@+id/tvBeginDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider2"
+            android:text="@string/filter_being_date"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <View
-        android:layout_width="match_parent"
-        android:padding="10dp"
-        android:layout_height="1dp"
-        android:background="#AAAAAA"
-        android:layout_below="@id/sSortOrder"
-        android:id="@+id/divider2"></View>
+        <DatePicker
+            android:id="@+id/dpBeginDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBeginDate"
+            android:layout_centerHorizontal="true"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Categories"
-        android:id="@+id/textView3"
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/cbWorld"
+            android:background="#AAAAAA"
+            android:padding="10dp"></View>
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/divider1"
+            android:text="@string/filter_sort_order"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Arts"
-        android:id="@+id/cbArts"
-        android:layout_below="@+id/textView3"
-        android:layout_marginLeft="30dp"/>
+        <Spinner
+            android:id="@+id/sSortOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider1"
+            android:layout_toEndOf="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sports"
-        android:id="@+id/cbSports"
-        android:layout_below="@+id/cbArts"
-        android:layout_marginLeft="30dp"
-        />
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/sSortOrder"
+            android:background="#AAAAAA"
+            android:padding="10dp"></View>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Science"
-        android:id="@+id/cbScience"
-        android:layout_below="@+id/cbSports"
-        android:layout_marginLeft="30dp"
-        />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/filter_categories"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Technology"
-        android:id="@+id/cbTechnology"
-        android:layout_below="@+id/cbScience"
-        android:layout_marginLeft="30dp"
-        />
+        <CheckBox
+            android:id="@+id/cbArts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_marginLeft="30dp"
+            android:text="@string/null_state_arts" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="World"
-        android:id="@+id/cbWorld"
-        android:layout_below="@+id/cbTechnology"
-        android:layout_marginLeft="30dp"
-        />
+        <CheckBox
+            android:id="@+id/cbSports"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbArts"
+            android:layout_marginLeft="30dp"
+            android:text="@string/null_state_sports" />
 
+        <CheckBox
+            android:id="@+id/cbScience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbSports"
+            android:layout_marginLeft="30dp"
+            android:text="@string/null_state_science" />
 
+        <CheckBox
+            android:id="@+id/cbTechnology"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbScience"
+            android:layout_marginLeft="30dp"
+            android:text="@string/null_state_tech" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/btnCancel"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <CheckBox
+            android:id="@+id/cbWorld"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbTechnology"
+            android:layout_marginLeft="30dp"
+            android:text="@string/null_state_world" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/btnSave"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/filter_btn_cancel" />
 
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/filter_btn_save" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reset"
-        android:id="@+id/btnReset"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/filter_btn_reset" />
 
-</RelativeLayout>
-
+    </RelativeLayout>
 </FrameLayout>

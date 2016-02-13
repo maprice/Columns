@@ -7,13 +7,10 @@
     android:fillViewport="true"
     android:orientation="vertical"
     android:paddingTop="?attr/actionBarSize">
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-
 
         <ImageView
             android:id="@+id/ivArts"
@@ -23,14 +20,13 @@
             android:layout_marginTop="@dimen/null_state_margin"
             android:scaleType="centerCrop"
             android:src="@drawable/arts_home" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignBottom="@id/ivArts"
             android:background="@color/titleOverlay"
-            android:gravity="right"
-            android:text="Arts"
+            android:gravity="end"
+            android:text="@string/null_state_arts"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
@@ -43,14 +39,13 @@
             android:layout_marginTop="@dimen/null_state_margin"
             android:scaleType="centerCrop"
             android:src="@drawable/sports_home" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignBottom="@id/ivSports"
             android:background="@color/titleOverlay"
-            android:gravity="right"
-            android:text="Sports"
+            android:gravity="end"
+            android:text="@string/null_state_sports"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
@@ -62,18 +57,16 @@
             android:onClick="onCategoryClick"
             android:layout_marginTop="@dimen/null_state_margin"
             android:scaleType="centerCrop"
-            android:src="@drawable/science_home" />
-
+            android:src="@drawable/science_home"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignBottom="@id/ivScience"
             android:background="@color/titleOverlay"
-            android:gravity="right"
-            android:text="Science"
+            android:gravity="end"
+            android:text="@string/null_state_science"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
 
         <ImageView
             android:id="@+id/ivTechnology"
@@ -84,18 +77,15 @@
             android:layout_marginTop="@dimen/null_state_margin"
             android:scaleType="centerCrop"
             android:src="@drawable/technology_home" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignBottom="@id/ivTechnology"
             android:background="@color/titleOverlay"
-            android:gravity="right"
-            android:text="Technology"
+            android:gravity="end"
+            android:text="@string/null_state_tech"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
-
 
         <ImageView
             android:id="@+id/ivWorld"
@@ -106,18 +96,14 @@
             android:layout_marginTop="@dimen/null_state_margin"
             android:scaleType="centerCrop"
             android:src="@drawable/world_png" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignBottom="@id/ivWorld"
             android:background="@color/titleOverlay"
-            android:gravity="right"
-            android:text="World"
+            android:gravity="end"
+            android:text="@string/null_state_world"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
-
     </RelativeLayout>
-
 </ScrollView>

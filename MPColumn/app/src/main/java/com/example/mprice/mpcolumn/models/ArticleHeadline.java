@@ -5,5 +5,4 @@ package com.example.mprice.mpcolumn.models;
  */
 public class ArticleHeadline {
     public String main;
-    public String contentKicker;
 }
