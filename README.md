@@ -29,6 +29,8 @@ All required and optional user stories completed
 - [x] Splash Screen
 - [x] Dynamic Toolbar menu items: When filters are set, solid filter icon, when they are empty, empty filter icon.
 - [x] Category chooser nullstate:  When user has not yet entered a search, display an array of category options.
+- [x] Image loading placeholder:  Display default loading image while waiting
+- [x] Progress bar:  Display progress bar while loading news article
 
 ## Demo
 ### Basic user flow
@@ -36,6 +38,12 @@ All required and optional user stories completed
 
 ### Applying Filters
 ![Alt text](/images/filters.gif)
+
+### Sort By Time
+![Alt text](/images/time_filter.gif)
+
+### Progress bar
+![Alt text](/images/progressbar.gif)
 
 
 ### Open Source Libraries Used

@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.example.mprice.mpcolumn.R;
 
@@ -23,6 +24,9 @@ public class ArticleActivity extends AppCompatActivity {
 
     @Bind(R.id.wvArticle)
     WebView wvArticle;
+
+    // Instance of the progress action-view
+    MenuItem miActionProgressItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,14 @@ public class ArticleActivity extends AppCompatActivity {
                 view.loadUrl(url);
                 return true;
             }
+
+            public void onPageFinished(WebView view, String url) {
+                hideProgressBar();
+            }
         });
 
-        wvArticle.loadUrl(url);
 
+        wvArticle.loadUrl(url);
     }
 
     @Override
@@ -61,5 +69,27 @@ public class ArticleActivity extends AppCompatActivity {
 
         miShare.setShareIntent(shareIntent);
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        // Extract the action-view from the menu item
+        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
+        // Return to finish
+        showProgressBar();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 }

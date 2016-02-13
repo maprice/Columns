@@ -94,13 +94,19 @@ public class SortDialogFragment extends DialogFragment {
         sSortOrder.setSelection(mSortModel.order.ordinal());
         cbArts.setChecked(mSortModel.newDeskArts);
         cbSports.setChecked(mSortModel.newDeskSports);
-
+        cbScience.setChecked(mSortModel.newDeskScience);
+        cbTechnology.setChecked(mSortModel.newDeskTechnology);
+        cbWorld.setChecked(mSortModel.newDeskWorld);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mSortModel.newDeskSports = cbSports.isChecked();
                 mSortModel.newDeskArts = cbArts.isChecked();
+                mSortModel.newDeskScience = cbScience.isChecked();
+                mSortModel.newDeskTechnology = cbTechnology.isChecked();
+                mSortModel.newDeskWorld = cbWorld.isChecked();
+
                 mSortModel.order = (SortModel.SortOrder) sSortOrder.getSelectedItem();
                 mSortModel.beginDateDay = dpBeginDate.getDayOfMonth();
                 mSortModel.beginDateMonth = dpBeginDate.getMonth();

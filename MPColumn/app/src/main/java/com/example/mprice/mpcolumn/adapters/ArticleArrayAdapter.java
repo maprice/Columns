@@ -65,6 +65,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
 
             Glide.with(holder.ivThumbnail.getContext())
                     .load(nyUrl + imageUrl)
+                    .placeholder(R.drawable.placeholder)
                     .into(holder.ivThumbnail);
         } else {
             holder.tvSnippet.setText(model.snippet);
